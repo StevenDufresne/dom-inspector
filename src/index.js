@@ -16,6 +16,7 @@ class DomInspector {
 
 		this.theme = options.theme || 'dom-inspector-theme-default';
 		this.exclude = this._formatExcludeOption(options.exclude || []);
+		this.onClickCallback = options.onClick || undefined;
 
 		this.overlay = {};
 		this.overlayId = '';
@@ -191,7 +192,12 @@ class DomInspector {
 			this.overlay.tips.classList.add('reverse');
 			tipsTop = marginLevel.height + elementInfo.top + 8;
 		}
-		addRule(this.overlay.tips, { top: `${tipsTop}px`, left: `${elementInfo.left}px`, display: 'block' });
+		addRule(this.overlay.tips, { top: `${tipsTop}px`, left: `${elementInfo.left}px`, display: 'block' });	
+		
+		if (this.onClickCallback) {
+			this.onClickCallback(e);
+		}
+		
 	}
 	_formatExcludeOption(excludeArray = []) {
 		const result = [];

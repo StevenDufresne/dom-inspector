@@ -14,6 +14,7 @@ var config = {
 			extensions: ['.css']
 		}),
 		eslint({
+			fix: true,
 			exclude: [
 				'src/*.css',
 			]
