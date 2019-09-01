@@ -32,6 +32,7 @@ class DomInspector {
 		if (this.destroyed) return logger.warn('Inspector instance has been destroyed! Please redeclare it.');
 		this.overlay.parent.style.display = 'block';
 		this.root.addEventListener('mousemove', this._throttleOnMove);
+		this.root.addEventListener('click', this._onClick.bind(this));		
 	}
 	pause() {
 		this.root.removeEventListener('mousemove', this._throttleOnMove);
@@ -134,6 +135,13 @@ class DomInspector {
 		parent.appendChild(ele);
 		return ele;
 	}
+
+	_onClick(e) {
+		console.log('con click')
+		if (this.onClickCallback) {
+			this.onClickCallback(e);
+		}
+	}
 	_onMove(e) {
 		for (let i = 0; i < this.exclude.length; i += 1) {
 			const cur = this.exclude[i];
@@ -192,12 +200,7 @@ class DomInspector {
 			this.overlay.tips.classList.add('reverse');
 			tipsTop = marginLevel.height + elementInfo.top + 8;
 		}
-		addRule(this.overlay.tips, { top: `${tipsTop}px`, left: `${elementInfo.left}px`, display: 'block' });	
-		
-		if (this.onClickCallback) {
-			this.onClickCallback(e);
-		}
-		
+		addRule(this.overlay.tips, { top: `${tipsTop}px`, left: `${elementInfo.left}px`, display: 'block' });		
 	}
 	_formatExcludeOption(excludeArray = []) {
 		const result = [];

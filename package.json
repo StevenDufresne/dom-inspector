@@ -6,7 +6,7 @@
   "main": "dist/dom-inspector.min.js",
   "scripts": {
     "dev": "rollup -w -m -c build/config.js --env=dev",
-    "build": "node build/build.js && cp -r ./dist ../web/public"
+    "build": "node build/build.js && rm -rf ../web/public/dist && cp -r ./dist ../web/public"
   },
   "files": [
     "src",

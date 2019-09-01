@@ -331,6 +331,7 @@ var DomInspector = function () {
 			if (this.destroyed) return exportObj.warn('Inspector instance has been destroyed! Please redeclare it.');
 			this.overlay.parent.style.display = 'block';
 			this.root.addEventListener('mousemove', this._throttleOnMove);
+			this.root.addEventListener('click', this._onClick.bind(this));
 		}
 	}, {
 		key: 'pause',
@@ -452,6 +453,14 @@ var DomInspector = function () {
 			return ele;
 		}
 	}, {
+		key: '_onClick',
+		value: function _onClick(e) {
+			console.log('con click');
+			if (this.onClickCallback) {
+				this.onClickCallback(e);
+			}
+		}
+	}, {
 		key: '_onMove',
 		value: function _onMove(e) {
 			for (var i = 0; i < this.exclude.length; i += 1) {
@@ -514,10 +523,6 @@ var DomInspector = function () {
 				tipsTop = marginLevel.height + elementInfo.top + 8;
 			}
 			addRule(this.overlay.tips, { top: tipsTop + 'px', left: elementInfo.left + 'px', display: 'block' });
-
-			if (this.onClickCallback) {
-				this.onClickCallback(e);
-			}
 		}
 	}, {
 		key: '_formatExcludeOption',
